@@ -12,10 +12,10 @@ export const create = async (ctx: Context) => {
         const { cartItems } = await ctx.request.body().value;
 
         try {
-            const msg = await createOrders(userId, cartItems)
+            const response = await createOrders(userId, cartItems)
 
             ctx.response.status = 200;
-            ctx.response.body = { message: msg }
+            ctx.response.body = response;
         } catch (err: any) {
             ctx.response.status = 500;
             ctx.response.body = { error: err.message };
