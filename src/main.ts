@@ -4,7 +4,6 @@ import { logger } from "./utils/logger.ts";
 
 const app = new Application();
 
-// Middleware for error handling and logging
 app.use(async (ctx, next) => {
   try {
     logger.info(
@@ -12,9 +11,15 @@ app.use(async (ctx, next) => {
     );
     await next();
   } catch (err) {
-    ctx.response.status = 500;
-    ctx.response.body = { error: err.message };
-    logger.error(`Error: ${err.message}`);
+    if (err instanceof Error) {
+      ctx.response.status = 500;
+      ctx.response.body = { error: err.message };
+      logger.error(`Error: ${err.message}`);
+    } else {
+      ctx.response.status = 500;
+      ctx.response.body = { error: "An unknown error occured" };
+      logger.error(`Error: An unknown error occured`);
+    }
   }
 });
 
