@@ -4,8 +4,8 @@ import { supabaseServiceClient } from "../../db/supabaseClient.ts";
 /**
  * Extracts the user ID from the Bearer token in the request header.
  *
- * @param ctx - Oak context object
- * @returns userId if authenticated, null if unauthorized
+ * @param {Context} ctx - Oak context object
+ * @returns {Promise<string | null>} - The userId if authenticated, null if unauthorized
  */
 export const getUserIdFromToken = async (
     ctx: Context,
