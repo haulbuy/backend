@@ -1,6 +1,7 @@
 // deno-lint-ignore-file no-explicit-any
 
-import { supabase } from "../../../db/supabaseClient.ts";
+import { supportsLocalStorage } from "https://esm.sh/v135/@supabase/auth-js@2.65.1/dist/module/lib/helpers.js";
+import { supabaseServiceClient } from "../../../db/supabaseClient.ts";
 
 export const processPayment = async (
     userId: string,
@@ -12,7 +13,7 @@ export const processPayment = async (
     }
 
     // Retrieve user's balance
-    const { data: balances, error: balanceError } = await supabase
+    const { data: balances, error: balanceError } = await supabaseServiceClient
         .from("balances")
         .select("*")
         .eq("user_id", userId)

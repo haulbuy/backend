@@ -5,13 +5,21 @@ export const create = async (ctx: Context) => {
     try {
         const { cartItems } = await ctx.request.body().value;
 
-        createOrders(cartItems)
+        try {
+            const msg = createOrders(cartItems)
+
+            ctx.response.status = 200;
+            ctx.response.body = { message: msg }
+        } catch (err: any) {
+            ctx.response.status = 500;
+            ctx.response.body = { error: err.message };
+        }
 
         ctx.response.status = 200;
         ctx.response.body = 
 
-    } catch (error: any) {
+    } catch (err: any) {
         ctx.response.status = 400;
-        ctx.response.body = { error: "Invalid request data " };
+        ctx.response.body = { err: "Invalid request data " };
     }
 };
