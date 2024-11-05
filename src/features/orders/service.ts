@@ -126,7 +126,7 @@ export const processOrders = async (
 
             // If the payment has been made, update the order status to paid
             if (payment.status === "paid") {
-                const { data: updatedOrder, error: updateError } = await supabaseServiceClient
+                const { data: _updatedOrder, error: updateError } = await supabaseServiceClient
                     .from("orders")
                     .update({ status: "paid" })
                     .eq("id", orderIds[i])
