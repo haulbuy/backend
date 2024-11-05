@@ -4,24 +4,23 @@ import { processPayment } from "./service.ts";
 import { parseJsonRequest } from "../../utils/parseJsonRequest.ts";
 import { createJsonResponse } from "../../utils/createJsonResponse.ts";
 import { handleErrorResponse } from "../../utils/handleErrorResponse.ts";
+import { validateRequestParams } from "../../utils/validateRequestParams.ts";
 
 export const handleCapturePayment = async (
     { request, response }: { request: any; response: any },
 ) => {
     try {
-        const { cart_items, payment_method, user_id } = await parseJsonRequest(
+        const { cartItems, paymentMethod, userId } = await parseJsonRequest(
             request,
         );
 
-        if (!user_id || !cart_items || !payment_method) {
-            throw new Error("Missing required fields");
-        }
+        validateRequestParams({ cartItems, paymentMethod, userId }, [
+            "cartItems",
+            "paymentMethod",
+            "userId",
+        ]);
 
-        const result = await processPayment(
-            user_id,
-            cart_items,
-            payment_method,
-        );
+        const result = await processPayment(userId, cartItems, paymentMethod);
 
         createJsonResponse(response, 200, { success: true, data: result });
     } catch (error) {
