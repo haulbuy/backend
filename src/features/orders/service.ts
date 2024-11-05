@@ -12,11 +12,11 @@ export const createOrders = async (
         const item = cartItems[i];
 
         const { data: product } = await supabaseServiceClient
-            .from('products')
-            .select('id')
-            .eq('url', item.url)
-            .maybeSingle()
-        
+            .from("products")
+            .select("id")
+            .eq("url", item.url)
+            .maybeSingle();
+
         let _productId = null;
 
         if (product) {
@@ -30,9 +30,19 @@ export const createOrders = async (
             quantity: item.quantity,
             status: "pending",
             image_url: item.selectedImageUrl,
-            price_cny: item.selectedSku.price
-        }
+            price_cny: item.selectedSku.price,
+        };
 
         _orders.push(order);
     }
-}
+
+    const { error: insertOrdersError } = await supabaseServiceClient
+        .from("orders")
+        .insert(_orders);
+    
+    if (insertOrdersError) {
+        throw insertOrdersError;
+    }
+
+    return "Orders created successfully"
+};
