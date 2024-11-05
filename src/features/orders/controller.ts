@@ -4,6 +4,12 @@ import { Context } from "https://deno.land/x/oak@v10.0.0/mod.ts";
 import { createOrders } from "./service.ts";
 import { getUserIdFromToken } from "../../utils/authUtils.ts";
 
+/**
+ * Creates orders from the provided cart items JSON and initiates a pending
+ * payment that must be fulfilled for the orders to be processed.
+ * 
+ * @param ctx - The Oak context object containing the request.
+ */
 export const create = async (ctx: Context) => {
     try {
         const userId = await getUserIdFromToken(ctx);
