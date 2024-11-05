@@ -1,6 +1,6 @@
 // deno-lint-ignore-file no-explicit-any
 
-import { supabase, supabaseServiceClient } from "../../../db/supabaseClient.ts";
+import { supabaseServiceClient } from "../../../db/supabaseClient.ts";
 
 /**
  * Creates orders from the provided cart items JSON and initiates a pending
