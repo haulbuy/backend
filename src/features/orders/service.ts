@@ -6,29 +6,33 @@ export const createOrders = async (
     userId: string,
     cartItems: any[],
 ) => {
-    const orders = [];
+    const _orders = [];
 
     for (let i = 0; i < cartItems.length; i++) {
-        let { data: product } = await supabaseServiceClient
+        const item = cartItems[i];
+
+        const { data: product } = await supabaseServiceClient
             .from('products')
             .select('id')
-            .eq('url', cartItems[i].url)
+            .eq('url', item.url)
             .maybeSingle()
         
-        let productId = null;
+        let _productId = null;
 
         if (product) {
-                
+            _productId = product.id;
         }
+
+        const order = {
+            user_id: userId,
+            product_id: _productId,
+            name: item.title,
+            quantity: item.quantity,
+            status: "pending",
+            image_url: item.selectedImageUrl,
+            price_cny: item.selectedSku.price
+        }
+
+        _orders.push(order);
     }
-
-    const orders2 = cartItems.map((item) => ({
-        user_id: userId,
-        name: item.title,
-        quantity = item.quantity,
-        status: "paid",
-        image_url: item.selectedImageUrl,
-        price_cny: item.selectedSku.price,
-
-    }));
 }
