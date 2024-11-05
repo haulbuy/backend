@@ -1,5 +1,3 @@
-// deno-lint-ignore-file no-explicit-any
-
 import { supabaseServiceClient } from "../../../db/supabaseClient.ts";
 
 export const createOrders = async (

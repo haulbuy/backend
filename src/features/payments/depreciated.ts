@@ -1,6 +1,6 @@
 // deno-lint-ignore-file no-explicit-any
 
-import { supabaseServiceClient } from "../../../db/supabaseClient.ts";
+import { supabase } from "../../../db/supabaseClient.ts";
 
 export const processPayment = async (
     userId: string,
@@ -12,7 +12,7 @@ export const processPayment = async (
     }
 
     // Retrieve user's balance
-    const { data: balances, error: balanceError } = await supabaseServiceClient
+    const { data: balances, error: balanceError } = await supabase
         .from("balances")
         .select("*")
         .eq("user_id", userId)
