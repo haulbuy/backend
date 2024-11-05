@@ -31,21 +31,25 @@ export const createOrders = async (
             status: "pending",
             image_url: item.selectedImageUrl,
             price_cny: item.selectedSku.price,
-            selected_sku: item.selectedSku
+            selected_sku: item.selectedSku,
         };
 
         orders.push(order);
     }
 
-    const { data: insertedOrders, error: insertOrdersError } = await supabaseServiceClient
-        .from("orders")
-        .insert(orders)
-        .select("id");
-    
+    const { data: insertedOrders, error: insertOrdersError } =
+        await supabaseServiceClient
+            .from("orders")
+            .insert(orders)
+            .select("id");
+
     if (insertOrdersError) {
         throw insertOrdersError;
     }
 
-    const insertedOrderIds = insertedOrders.map(order => order.id)
-    return { message: "Orders created successfully", orderIds: insertedOrderIds}
+    const insertedOrderIds = insertedOrders.map((order) => order.id);
+    return {
+        message: "Orders created successfully",
+        orderIds: insertedOrderIds,
+    };
 };
