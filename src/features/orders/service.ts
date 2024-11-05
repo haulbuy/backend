@@ -100,9 +100,44 @@ export const createOrders = async (
 export const processOrders = async (
     orderIds: string[]
 ) => {
+    // Check if payment has been made for each order
     for (let i = 0; i < orderIds.length; i++) {
-        const { data: order, error: }
+        const { data: order, error: error } = await supabaseServiceClient
+            .from("orders")
+            .select("*")
+            .eq("id", orderIds[i])
+            .single();
+        
+        if (error) {
+            throw error;
+        }
+
+        // If the order is pending, check if the payment has been made
+        if (order.status === "pending") {
+            const { data: payment, error: paymentError } = await supabaseServiceClient
+                .from("payments")
+                .select("*")
+                .eq("id", order.payment_id)
+                .single();
+
+            if (paymentError) {
+                throw paymentError;
+            }
+
+            // If the payment has been made, update the order status to paid
+            if (payment.status === "paid") {
+                const { data: updatedOrder, error: updateError } = await supabaseServiceClient
+                    .from("orders")
+                    .update({ status: "paid" })
+                    .eq("id", orderIds[i])
+                    .single();
+
+                if (updateError) {
+                    throw updateError;
+                }
+            }
+        }
     }
 
-
+    return "Orders processed successfully";
 }
