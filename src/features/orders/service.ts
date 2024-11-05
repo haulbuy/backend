@@ -15,8 +15,7 @@ export const createOrders = async (
     userId: string,
     cartItems: any[],
 ) => {
-    const orders: any[] = [];
-
+    // Calculate order total
     let orderTotal = 0;
 
     for (let i = 0; i < cartItems.length; i++) {
@@ -25,16 +24,22 @@ export const createOrders = async (
         orderTotal += item.selectedSku.price;
     }
 
-    const { data: insertedPayment, error: insertPaymentError } = await supabaseServiceClient
-        .from("payments")
-        .insert({
-            user_id: userId,
-            amount_cny: orderTotal
-        })
+    const { data: insertedPayment, error: insertPaymentError } =
+        await supabaseServiceClient
+            .from("payments")
+            .insert({
+                user_id: userId,
+                amount_cny: orderTotal
+            })
+            .select("id")
+            .single();
 
     if (insertPaymentError) {
         throw insertPaymentError
     }
+
+    // Create order objects to insert from cartItems
+    const orders: any[] = [];
 
     for (let i = 0; i < cartItems.length; i++) {
         const item = cartItems[i];
@@ -60,11 +65,13 @@ export const createOrders = async (
             image_url: item.selectedImageUrl,
             price_cny: item.selectedSku.price,
             selected_sku: item.selectedSku,
+            payment_id: insertedPayment.id
         };
 
         orders.push(order);
     }
 
+    // Insert orders and return message
     const { data: insertedOrders, error: insertOrdersError } =
         await supabaseServiceClient
             .from("orders")
@@ -79,6 +86,7 @@ export const createOrders = async (
     return {
         message: "Orders created successfully",
         orderIds: insertedOrderIds,
+        paymentId: insertedPayment.id
     };
 };
 
