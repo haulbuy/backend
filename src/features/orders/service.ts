@@ -1,10 +1,12 @@
+// deno-lint-ignore-file no-explicit-any
+
 import { supabaseServiceClient } from "../../../db/supabaseClient.ts";
 
 export const createOrders = async (
     userId: string,
     cartItems: any[],
 ) => {
-    const _orders = [];
+    const orders: any[] = [];
 
     for (let i = 0; i < cartItems.length; i++) {
         const item = cartItems[i];
@@ -15,15 +17,15 @@ export const createOrders = async (
             .eq("url", item.url)
             .maybeSingle();
 
-        let _productId = null;
+        let productId = null;
 
         if (product) {
-            _productId = product.id;
+            productId = product.id;
         }
 
         const order = {
             user_id: userId,
-            product_id: _productId,
+            product_id: productId,
             name: item.title,
             quantity: item.quantity,
             status: "pending",
@@ -31,12 +33,12 @@ export const createOrders = async (
             price_cny: item.selectedSku.price,
         };
 
-        _orders.push(order);
+        orders.push(order);
     }
 
     const { error: insertOrdersError } = await supabaseServiceClient
         .from("orders")
-        .insert(_orders);
+        .insert(orders);
     
     if (insertOrdersError) {
         throw insertOrdersError;
