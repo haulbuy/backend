@@ -29,13 +29,11 @@ jobs:
           node-version: lts/*
 
       - name: Install step
-        run: "deno cache src/main.ts"
+        run: deno cache src/main.ts
 
       - name: Upload to Deno Deploy
         uses: denoland/deployctl@v1
         with:
           project: "haulbuy-backend"
           entrypoint: "src/main.ts"
-          root: ""
-          
-          
+          root: "."
