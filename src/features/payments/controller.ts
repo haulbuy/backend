@@ -24,7 +24,7 @@ export const balanceProcess = async (ctx: Context) => {
                 ctx.response.body = { error: response.error };
             } else {
                 ctx.response.status = 200;
-                ctx.response.body = { message: response };
+                ctx.response.body = response;
             }
         } catch (err: any) {
             ctx.response.status = 500;

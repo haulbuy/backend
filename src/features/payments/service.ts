@@ -49,8 +49,8 @@ export const processBalancePayment = async (
     const { data: _updatedBalance, error: updateError } =
         await supabaseServiceClient
             .from("balances")
-            .update({ amount_cny: balance.balance_cny - payment.amount_cny })
-            .eq("id", payment.balance_id)
+            .update({ balance_cny: balance.balance_cny - payment.amount_cny })
+            .eq("id", balance.id)
             .single();
 
     if (updateError) {
