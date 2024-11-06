@@ -109,7 +109,7 @@ export const processOrders = async (
             .single();
         
         if (error) {
-            throw error;
+            return `Order with ID ${orderIds[i]} could not be processed: ${error.message}`;
         }
 
         // If the order is pending, check if the payment has been made
@@ -121,7 +121,7 @@ export const processOrders = async (
                 .single();
 
             if (paymentError) {
-                throw paymentError;
+                return `Order with ID ${orderIds[i]} could not be processed: ${paymentError.message}`;
             }
 
             // If the payment has been made, update the order status to paid
@@ -133,8 +133,10 @@ export const processOrders = async (
                     .single();
 
                 if (updateError) {
-                    throw updateError;
+                    return `Order with ID ${orderIds[i]} could not be processed: ${updateError.message}`;
                 }
+            } else {
+                return `Order with ID ${orderIds[i]} could not be processed: Payment not made`;
             }
         }
     }
