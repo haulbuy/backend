@@ -28,7 +28,7 @@ export const create = async (ctx: Context) => {
         }
     } catch (err: any) {
         ctx.response.status = 400;
-        ctx.response.body = { err: "Invalid request data" };
+        ctx.response.body = { error: "Invalid request data" };
     }
 };
 
