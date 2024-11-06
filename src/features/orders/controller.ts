@@ -48,7 +48,7 @@ export const process = async (ctx: Context) => {
             const response = await processOrders(orderIds);
 
             ctx.response.status = 200;
-            ctx.response.body = response;
+            ctx.response.body = { message: response };
         } catch (err: any) {
             ctx.response.status = 500;
             ctx.response.body = { error: err.message };
