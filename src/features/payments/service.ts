@@ -60,11 +60,26 @@ export const processBalancePayment = async (
         };
     }
 
+    // Fetch balance payment method
+    const { data: balancePaymentMethod, error: balancePaymentMethodError } =
+        await supabaseServiceClient
+            .from("payment_methods")
+            .select("*")
+            .eq("name", "balance")
+            .single();
+
+    if (balancePaymentMethodError) {
+        return {
+            error:
+                `Payment with ID ${paymentId} could not be processed: ${balancePaymentMethodError.message}`,
+        };
+    }
+
     // Update payment status
     const { data: _updatedPayment, error: paymentUpdateError } =
         await supabaseServiceClient
             .from("payments")
-            .update({ status: "paid" })
+            .update({ status: "paid", payment_method_id: balancePaymentMethod.id })
             .eq("id", paymentId)
             .single();
 
