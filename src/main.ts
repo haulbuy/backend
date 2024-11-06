@@ -3,6 +3,7 @@
 import { Application } from "../deps.ts";
 import { logger } from "./utils/generalUtils.ts";
 import ordersRoutes from "./features/orders/routes.ts" 
+import paymentsRoutes from "./features/payments/routes.ts"
 
 const app = new Application();
 
@@ -26,6 +27,7 @@ app.use(async (ctx, next) => {
 
 // Register routes
 app.use(ordersRoutes.routes()); app.use(ordersRoutes.allowedMethods());
+app.use(paymentsRoutes.routes()); app.use(paymentsRoutes.allowedMethods());
 
 // Start the server
 console.log("Server running on http://localhost:8000");
