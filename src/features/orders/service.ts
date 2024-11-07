@@ -66,7 +66,7 @@ export const createOrders = async (
             price_cny: item.selectedSku.price,
             selected_sku: item.selectedSku,
             payment_id: insertedPayment.id,
-            reconstructed_property_path: item.reconstructedPropertyPath
+            reconstructed_property_path: item.reconstructedPropPath
         };
 
         orders.push(order);
