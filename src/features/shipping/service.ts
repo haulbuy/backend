@@ -69,6 +69,7 @@ async function fetchShippingLines(
         regionId,
         weight,
         volume,
+        lang: "en_US"
     };
 
     try {
