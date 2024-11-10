@@ -84,10 +84,8 @@ async function fetchShippingLines(
             },
             body: JSON.stringify(bodyData),
         });
-
-        if (!response.ok) {
-            return { error: "Failed to fetch shipping lines", response: response.json() };
-        }
+        
+        console.log("Response: ", response);
 
         const data = await response.json();
         console.log("Shipping lines fetched: ", data);
