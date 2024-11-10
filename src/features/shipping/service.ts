@@ -69,7 +69,6 @@ async function fetchShippingLines(
         regionId,
         weight: Number(weight),
         volume,
-        lang: "en_US",
     };
 
     console.log("Sending request with body data: ", bodyData);
