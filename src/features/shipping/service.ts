@@ -53,7 +53,6 @@ export const calculateShippingSugargoo = async (
 async function fetchShippingLines(
     countryId: string,
     maxLength: number,
-    postalId: string[],
     recommendType: number,
     regionId: string,
     weight: number,
