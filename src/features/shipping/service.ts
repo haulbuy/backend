@@ -72,6 +72,8 @@ async function fetchShippingLines(
         lang: "en_US",
     };
 
+    console.log("Sending request with body data: ", bodyData);
+
     try {
         const response = await fetch(apiUrl, {
             method: "POST",
