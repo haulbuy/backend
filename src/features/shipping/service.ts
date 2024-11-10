@@ -63,11 +63,11 @@ async function fetchShippingLines(
 
     const bodyData = {
         countryId,
-        maxLength,
+        maxLength: Number(maxLength),
         postalId,
         recommendType,
         regionId,
-        weight,
+        weight: Number(weight),
         volume,
         lang: "en_US",
     };
