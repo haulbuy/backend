@@ -65,7 +65,6 @@ async function fetchShippingLines(
         countryId,
         maxLength: Number(maxLength),
         postalId,
-        recommendType,
         regionId,
         weight: Number(weight),
         volume,
@@ -78,7 +77,6 @@ async function fetchShippingLines(
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
-                "Authorization": "bGFtcF93ZWI6bGFtcF93ZWJfc2VjcmV0",
                 "Origin": "https://www.sugargoo.com",
             },
             body: JSON.stringify(bodyData),
