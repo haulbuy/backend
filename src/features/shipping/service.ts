@@ -1,7 +1,5 @@
 // deno-lint-ignore-file no-explicit-any
 
-import { supabaseServiceClient } from "../../../db/supabaseClient.ts";
-
 const sugargooApiBaseUrl = " https://api.sugargoo.com/api";
 
 /**
@@ -15,14 +13,28 @@ const sugargooApiBaseUrl = " https://api.sugargoo.com/api";
  * @param length - The length of the package in centimeters.
  * @returns A promise that resolves to the calculated shipping cost.
  */
-export const calculateShipping = async (
+export const calculateShippingSugargoo = async (
     country: string,
     region: string,
     weight: number,
     height: number,
     width: number,
     length: number,
+    forbiddenAttributeIds: string[],
 ) => {
+    const volume = height * width * length;
+
+    const data = await fetchShippingLines(
+        country,
+        length,
+        forbiddenAttributeIds,
+        1,
+        region,
+        weight,
+        volume,
+    );
+
+    return { shippingLines: data.data };
 };
 
 /**
@@ -41,7 +53,7 @@ export const calculateShipping = async (
 async function fetchShippingLines(
     countryId: string,
     maxLength: number,
-    postalId: string,
+    postalId: string[],
     recommendType: number,
     regionId: string,
     weight: number,
