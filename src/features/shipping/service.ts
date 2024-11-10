@@ -1,8 +1,8 @@
 // deno-lint-ignore-file no-explicit-any
 
-import { supabaseServiceClient } from "../../../db/supabaseClient.ts"
+import { supabaseServiceClient } from "../../../db/supabaseClient.ts";
 
-const sugargooApiBaseUrl = " https://api.sugargoo.com/api"
+const sugargooApiBaseUrl = " https://api.sugargoo.com/api";
 
 export const calculateShipping = async (
     country: string,
@@ -10,10 +10,9 @@ export const calculateShipping = async (
     weight: number,
     height: number,
     width: number,
-    length: number
+    length: number,
 ) => {
-
-}
+};
 
 /**
  * Fetches shipping lines based on the provided parameters.
@@ -35,9 +34,9 @@ async function fetchShippingLines(
     recommendType: number,
     regionId: string,
     weight: number,
-    volume: number
+    volume: number,
 ) {
-    const apiUrl = `${sugargooApiBaseUrl}/logisticscecenter/estimate/recommand`
+    const apiUrl = `${sugargooApiBaseUrl}/logisticscecenter/estimate/recommand`;
 
     const bodyData = {
         countryId,
@@ -47,7 +46,7 @@ async function fetchShippingLines(
         regionId,
         weight,
         volume,
-    }
+    };
 
     try {
         const response = await fetch(apiUrl, {
