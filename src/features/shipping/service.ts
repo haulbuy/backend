@@ -85,7 +85,12 @@ async function fetchShippingLines(
             body: JSON.stringify(bodyData),
         });
         
-        console.log("Response: ", response);
+        console.log("Response status: ", response.status);
+
+        if (!response.ok) {
+            console.error("Failed response status: ", response.statusText);
+            throw new Error(`Failed to fetch shipping lines, status: ${response.status}`);
+        }
 
         const data = await response.json();
         console.log("Shipping lines fetched: ", data);
