@@ -86,7 +86,7 @@ async function fetchShippingLines(
         });
 
         if (!response.ok) {
-            throw new Error("Failed to fetch shipping lines");
+            return { error: "Failed to fetch shipping lines", response: response };
         }
 
         const data = await response.json();
