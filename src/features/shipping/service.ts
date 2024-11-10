@@ -4,6 +4,17 @@ import { supabaseServiceClient } from "../../../db/supabaseClient.ts";
 
 const sugargooApiBaseUrl = " https://api.sugargoo.com/api";
 
+/**
+ * Calculates the shipping cost based on the destination and package dimensions.
+ *
+ * @param country - The destination country for the shipment.
+ * @param region - The destination region within the country.
+ * @param weight - The weight of the package in kilograms.
+ * @param height - The height of the package in centimeters.
+ * @param width - The width of the package in centimeters.
+ * @param length - The length of the package in centimeters.
+ * @returns A promise that resolves to the calculated shipping cost.
+ */
 export const calculateShipping = async (
     country: string,
     region: string,
