@@ -40,14 +40,14 @@ export const calculateShippingSugargoo = async (
 /**
  * Fetches shipping lines based on the provided parameters.
  *
- * @param {string} countryId - The ID of the country.
- * @param {number} maxLength - The maximum length of the package.
- * @param {string} postalId - The postal ID.
- * @param {number} recommendType - The type of recommendation.
- * @param {string} regionId - The ID of the region.
- * @param {number} weight - The weight of the package.
- * @param {number} volume - The volume of the package.
- * @returns {Promise<any>} A promise that resolves to the fetched shipping lines data.
+ * @param countryId - The ID of the country.
+ * @param maxLength - The maximum length of the package.
+ * @param postalId - The postal ID.
+ * @param recommendType - The type of recommendation.
+ * @param regionId - The ID of the region.
+ * @param weight - The weight of the package.
+ * @param volume - The volume of the package.
+ * @returns A promise that resolves to the fetched shipping lines data.
  * @throws Will throw an error if the fetch operation fails.
  */
 async function fetchShippingLines(
@@ -69,7 +69,7 @@ async function fetchShippingLines(
         regionId,
         weight,
         volume,
-        lang: "en_US"
+        lang: "en_US",
     };
 
     try {
