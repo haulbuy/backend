@@ -22,6 +22,7 @@ export const calculateShippingSugargoo = async (
     length: number,
     forbiddenAttributeIds: string[],
 ) => {
+    console.log("Bitch")
     const volume = height * width * length;
 
     const data = await fetchShippingLines(
