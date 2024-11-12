@@ -1,3 +1,5 @@
+// deno-lint-ignore-file no-explicit-any
+
 const GOOGLE_TRANSLATE_API_KEY = Deno.env.get("GOOGLE_TRANSLATE_API_KEY");
 const TRANSLATE_API_URL = `https://translation.googleapis.com/language/translate/v2`;
 
@@ -41,23 +43,44 @@ async function translateText(
  * @returns A promise that resolves to the translated JSON data.
  */
 export async function translateJson(
-    data: unknown,
-    targetLanguage: string
+  data: unknown,
+  targetLanguage: string
 ): Promise<unknown> {
-    if (typeof data === "string") {
-        return translateText(data, targetLanguage);
-    } else if (Array.isArray(data)) {
-        return Promise.all(data.map(item => translateJson(item, targetLanguage)));
-    } else if (typeof data === "object" && data != null) {
-        const translatedObject: Record<string, unknown> = {};
+  if (typeof data === "string") {
+    return translateText(data, targetLanguage);
+  } else if (Array.isArray(data)) {
+    return Promise.all(data.map((item) => translateJson(item, targetLanguage)));
+  } else if (typeof data === "object" && data != null) {
+    const translatedObject: Record<string, unknown> = {};
 
-        for (const [key, value] of Object.entries(data)) {
-            translatedObject[key] = await translateJson(value, targetLanguage);
-        }
-
-        return translatedObject;
+    for (const [key, value] of Object.entries(data)) {
+      translatedObject[key] = await translateJson(value, targetLanguage);
     }
 
-    return data;
+    return translatedObject;
+  }
+
+  return data;
 }
 
+/**
+ * Translates the given data to the specified target language.
+ *
+ * @param data - The data to be translated. It can be a record, a string, or an array.
+ * @param targetLanguage - The language code to which the data should be translated.
+ * @returns A promise that resolves to the translated data, which can be a record, a string, or an array.
+ */
+export async function translateData(
+  data: Record<string, unknown> | string | unknown[],
+  targetLanguage: string
+): Promise<Record<string, unknown> | string | unknown[]> {
+  const result = await translateJson(data, targetLanguage);
+
+  if (typeof result === "object" && result !== null) {
+    return result as Record<string, any> | any[];
+  } else if (typeof result === "string") {
+    return result;
+  }
+
+  return {};
+}
