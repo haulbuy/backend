@@ -5,6 +5,7 @@ import { logger } from "./utils/generalUtils.ts";
 import ordersRoutes from "./features/orders/routes.ts";
 import paymentsRoutes from "./features/payments/routes.ts";
 import shippingRoutes from "./features/shipping/routes.ts";
+import translateRoutes from "./features/translate/routes.ts";
 
 const app = new Application();
 
@@ -33,6 +34,8 @@ app.use(paymentsRoutes.routes());
 app.use(paymentsRoutes.allowedMethods());
 app.use(shippingRoutes.routes());
 app.use(shippingRoutes.allowedMethods());
+app.use(translateRoutes.routes());
+app.use(translateRoutes.allowedMethods());
 
 // Start the server
 console.log("Server running on http://localhost:8000");

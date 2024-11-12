@@ -7,6 +7,7 @@ import { translateData } from "./service.ts";
  * Translates the provided text to the specified target language.
  *
  * @param {Context} ctx - The context object containing the request and response.
+ * 
  * @returns {Promise<void>} - A promise that resolves when the translation is complete.
  *
  * @throws {Error} - Throws an error if the request data is invalid or if the translation fails.
