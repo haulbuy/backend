@@ -14,27 +14,27 @@ const sugargooApiBaseUrl = " https://api.sugargoo.com/api";
  * @returns A promise that resolves to the calculated shipping cost.
  */
 export const calculateShippingSugargoo = async (
-    country: string,
-    region: string,
-    weight: number,
-    height: number,
-    width: number,
-    length: number,
-    forbiddenAttributeIds: string[],
+  country: string,
+  region: string,
+  weight: number,
+  height: number,
+  width: number,
+  length: number,
+  forbiddenAttributeIds: string[]
 ) => {
-    const volume = height * width * length;
+  const volume = height * width * length;
 
-    const data = await fetchShippingLines(
-        country,
-        length,
-        forbiddenAttributeIds,
-        1,
-        region,
-        weight,
-        volume,
-    );
+  const data = await fetchShippingLines(
+    country,
+    length,
+    forbiddenAttributeIds,
+    1,
+    region,
+    weight,
+    volume
+  );
 
-    return { shippingLines: data };
+  return { shippingLines: data };
 };
 
 /**
@@ -51,50 +51,52 @@ export const calculateShippingSugargoo = async (
  * @throws Will throw an error if the fetch operation fails.
  */
 async function fetchShippingLines(
-    countryId: string,
-    maxLength: number,
-    recommendType: number,
-    regionId: string,
-    weight: number,
-    volume: number,
+  countryId: string,
+  maxLength: number,
+  recommendType: number,
+  regionId: string,
+  weight: number,
+  volume: number
 ) {
-    const apiUrl = `${sugargooApiBaseUrl}/logisticscecenter/estimate/recommand`;
+  const apiUrl = `${sugargooApiBaseUrl}/logisticscecenter/estimate/recommand`;
 
-    const bodyData = {
-        countryId,
-        maxLength: Number(maxLength),
-        postalId: [],
-        recommendType,
-        regionId,
-        weight: Number(weight),
-        volume,
-    };
+  const bodyData = {
+    countryId,
+    maxLength: Number(maxLength),
+    postalId: [],
+    recommendType,
+    regionId,
+    weight: Number(weight),
+    volume,
+  };
 
-    console.log("Sending request with body data: ", bodyData);
+  console.log("Sending request with body data: ", bodyData);
 
-    try {
-        const response = await fetch(apiUrl, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                "Origin": "https://www.sugargoo.com",
-            },
-            body: JSON.stringify(bodyData),
-        });
-        
-        console.log("Response status: ", response.status);
+  try {
+    const response = await fetch(apiUrl, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Origin: "https://www.sugargoo.com",
+      },
+      body: JSON.stringify(bodyData),
+    });
 
-        if (!response.ok) {
-            console.error("Failed response status: ", response.statusText);
-            throw new Error(`Failed to fetch shipping lines, status: ${response.status}`);
-        }
+    console.log("Response status: ", response.status);
 
-        const data = await response.json();
-        console.log("Shipping lines fetched: ", data);
-
-        return data;
-    } catch (error: any) {
-        console.error("Error fetching shipping lines: ", error);
-        throw error;
+    if (!response.ok) {
+      console.error("Failed response status: ", response.statusText);
+      throw new Error(
+        `Failed to fetch shipping lines, status: ${response.status}`
+      );
     }
+
+    const data = await response.json();
+    console.log("Shipping lines fetched: ", data);
+
+    return data;
+  } catch (error: any) {
+    console.error("Error fetching shipping lines: ", error);
+    throw error;
+  }
 }
