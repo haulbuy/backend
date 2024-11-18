@@ -64,7 +64,7 @@ export const createOrders = async (userId: string, cartItems: any[]) => {
       selected_sku: item.selectedSku,
       payment_id: insertedPayment.id,
       reconstructed_property_path: item.reconstructedPropPath,
-      platform_platform_id: item.platformId,
+      platform_product_id: item.id,
     };
 
     orders.push(order);
