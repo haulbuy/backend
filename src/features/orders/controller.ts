@@ -1,8 +1,10 @@
 // deno-lint-ignore-file no-explicit-any no-unused-vars
 
 import { Context } from "https://deno.land/x/oak@v10.0.0/mod.ts";
-import { createOrders, processOrders } from "./service.ts";
+
 import { getUserIdFromToken } from "../../utils/authUtils.ts";
+
+import { createOrders, processOrders } from "./service.ts";
 
 /**
  * Creates orders from the provided cart items JSON and initiates a pending

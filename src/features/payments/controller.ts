@@ -1,8 +1,10 @@
 // deno-lint-ignore-file no-explicit-any no-unused-vars
 
 import { Context } from "https://deno.land/x/oak@v10.0.0/mod.ts";
-import { processBalancePayment } from "./service.ts";
+
 import { getUserIdFromToken } from "../../utils/authUtils.ts";
+
+import { processBalancePayment } from "./service.ts";
 
 /**
  * Processes a payment by updating the balance and payment status.
