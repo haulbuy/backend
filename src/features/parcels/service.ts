@@ -2,6 +2,22 @@
 
 import { supabaseServiceClient } from "../../../db/supabaseClient.ts";
 
+/**
+ * Creates a parcel for the given user with the specified orders, address, and
+ * shipping method.
+ * 
+ * @param userId - The ID of the user creating the parcel.
+ * @param orderIds - An array of order IDs to be included in the parcel.
+ * @param addressId - The ID of the address where the parcel will be shipped.
+ * @param shippingMethod - The shipping method to be used for the parcel.
+ * 
+ * @returns An object containing a success message, the ID of the created
+ *          parcel, and the ID of the created payment.
+ * 
+ * @throws Will throw an error if there is an issue inserting the payment,
+ *         retrieving order details, inserting the parcel, or updating the
+ *         orders.
+ */
 export const createParcel = async (
   userId: string,
   orderIds: string[],
