@@ -1,4 +1,4 @@
-// deno-lint-ignore-file no-explicit-any
+// deno-lint-ignore-file no-explicit-any no-unused-vars
 
 import { Context } from "https://deno.land/x/oak@v10.0.0/mod.ts";
 
@@ -18,10 +18,10 @@ export const translate = async (ctx: Context) => {
     const { text, targetLanguage } = await ctx.request.body().value;
 
     try {
-      const response = await translateData(text, targetLanguage);
+      // const response = await translateData(text, targetLanguage);
 
       ctx.response.status = 200;
-      ctx.response.body = response;
+      ctx.response.body = text;
     } catch (err: any) {
       ctx.response.status = 500;
       ctx.response.body = { error: err.message };
